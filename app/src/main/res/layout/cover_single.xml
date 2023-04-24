@@ -36,7 +36,7 @@
             android:layout_marginRight="20dp"
             android:fontFamily="@font/metropolis_semibold"
             android:maxLines="2"
-            android:text="Fashion Sale"
+            android:text="nizakat"
             android:textColor="@color/white"
             android:textSize="40dp">
         </TextView>

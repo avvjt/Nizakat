@@ -17,7 +17,7 @@ import com.bumptech.glide.Glide
 import com.example.buynow.R
 
 
-import com.example.buynow.utils.FirebaseUtils.storageReference
+
 import com.example.buynow.data.local.room.Card.CardViewModel
 import com.example.buynow.presentation.activity.PaymentMethodActivity
 import com.example.buynow.presentation.activity.SettingsActivity
@@ -29,7 +29,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-import com.google.firebase.storage.UploadTask
+
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -118,7 +118,7 @@ class ProfileFragment : Fragment() {
         getUserData()
 
         uploadImage_profileFrag.setOnClickListener {
-            uploadImage()
+
         }
 
         settingCd_profileFrag.setOnClickListener {
@@ -137,8 +137,8 @@ class ProfileFragment : Fragment() {
                 when(item.itemId) {
                     R.id.galleryMenu ->
                         launchGallery()
-                    R.id.cameraMenu ->
-                        uploadImage()
+
+
 
                 }
                 true
@@ -203,38 +203,7 @@ class ProfileFragment : Fragment() {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
     }
 
-    private fun uploadImage(){
 
-        if(filePath != null){
-            val ref = storageReference.child("profile_Image/" + UUID.randomUUID().toString())
-            val uploadTask = ref?.putFile(filePath!!)
-
-            val urlTask = uploadTask?.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
-                if (!task.isSuccessful) {
-                    task.exception?.let {
-                        throw it
-                    }
-                }
-                return@Continuation ref.downloadUrl
-            })?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val downloadUri = task.result
-                    addUploadRecordToDb(downloadUri.toString())
-
-                    // show save...
-
-
-                } else {
-                    // Handle failures
-                }
-            }?.addOnFailureListener{
-
-            }
-        }else{
-
-            Toast.makeText(context, "Please Upload an Image", Toast.LENGTH_SHORT).show()
-        }
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
